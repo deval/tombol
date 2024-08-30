@@ -110,7 +110,7 @@
               }).then(() => {
                 userDocRef.get().then(doc => {
                 if (doc.exists) {
-                  if ((doc.data().timestamp.seconds + 60) < doc.data().attempt.seconds) {
+                  if ((doc.data().last.seconds + 60) < doc.data().attempt.seconds) {
                     userDocRef.update({
                       count: firebase.firestore.FieldValue.increment(1),
                       last: firebase.firestore.FieldValue.serverTimestamp()
