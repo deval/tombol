@@ -75,11 +75,11 @@
               userDocRef.get().then(doc => {
                 if (doc.exists) {
                   this.userCount = doc.data().count || 0;
-                  this.userLastIncrement = doc.data().last || 0;
+                  this.userLastIncrement = doc.data().last.toDate().toLocaleDateString() || 0;
                 } else {
                   userDocRef.set({ count: 0 }); // Initialize user count if not exists
                   this.userCount = 0;
-                  this.userLastIncrement = 0;
+                  this.userLastIncrement = "unknown";
                 }
               });
               
@@ -88,11 +88,11 @@
               globalDocRef.get().then(doc => {
                 if (doc.exists) {
                   this.globalCount = doc.data().count || 0;
-                  this.globalLastIncrement = doc.data().last || 0;
+                  this.globalLastIncrement = doc.data().last.toDate().toLocaleDateString() || 0;
                 } else {
                   globalDocRef.set({ count: 0 }); // Initialize global count if not exists
                   this.globalCount = 0;
-                  this.globalLastIncrement = 0;
+                  this.globalLastIncrement = "unknown";
                 }
               });
             }
