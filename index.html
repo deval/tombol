@@ -17,7 +17,7 @@
       <div v-if="user">Welcome, {{ user.displayName }}!</div>
       
       <!-- Button to increment count, only visible when logged in -->
-      <button v-if="user" @click="incrementCount" class="y-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Increment Count</button>
+      <button v-if="user" @click="incrementCount" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Increment Count</button>
       
       <!-- Display user's individual count -->
       <p v-if="user">Your Count: {{ userCount }}</p>
@@ -26,7 +26,7 @@
       <p>Total Global Count: {{ globalCount }}</p>
   
       <!-- Login Button -->
-      <button v-if="!user" @click="signInWithGoogle" class="y-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Sign in with Google</button>
+      <button v-if="!user" @click="signInWithGoogle" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Sign in with Google</button>
       
     </div>
 
@@ -44,6 +44,8 @@
       const firebaseApp = firebase.initializeApp(firebaseConfig);
       const db = firebaseApp.firestore();
       const auth = firebaseApp.auth();
+
+      firebase.firestore().settings({ experimentalForceLongPolling: true });
   
       // VueFire App
       const app = Vue.createApp({
