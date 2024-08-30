@@ -4,6 +4,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/vuefire@3.3.3/dist/vuefire.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Your Vue components and app content go here -->
+      <div v-if="user">{{ user.displayName }}</div>
+      <button @click="signInWithGoogle">Sign in with Google</button>
+    </div>
     <script>
       // Your web app's Firebase configuration
       const firebaseConfig = {
@@ -42,17 +50,8 @@
         modules: [
           // any additional VueFire modules, e.g., Firestore
         ],
-      });
-  
+      });  
       app.mount('#app');
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/vuefire@3.3.3/dist/vuefire.global.js"></script>
-  </head>
-  <body>
-    <div id="app">
-      <!-- Your Vue components and app content go here -->
-      <div v-if="user">{{ user.displayName }}</div>
-      <button @click="signInWithGoogle">Sign in with Google</button>
-    </div>
   </body>
 </html>
