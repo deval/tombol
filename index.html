@@ -22,6 +22,8 @@
       <!-- Display user's individual count -->
       <p v-if="user">Your Count: {{ userCount }}</p>
       <p v-if="user">Last Update: {{ userLastIncrement }}</p>
+      <p v-if="user">Last Seconds: {{ userLastSeconds }}</p>
+      <p v-if="user">Attempt Seconds: {{ userAttemptSeconds }}</p>
       
       <!-- Display global count -->
       <p>Total Global Count: {{ globalCount }}</p>
@@ -57,7 +59,8 @@
             userCount: 0,
             globalCount: 0,
             userLastIncrement: 0,
-            userLastAttempt: 0,
+            userLastSeconds: 0,
+            userAttemptSeconds: 0,
             globalLastIncrement: 0,
           };
         },
@@ -77,10 +80,14 @@
                 if (doc.exists) {
                   this.userCount = doc.data().count || 0;
                   this.userLastIncrement = (doc.data().last.toDate().toLocaleDateString() + " " + doc.data().last.toDate().toLocaleTimeString()) || 0;
+                  this.userLastSeconds = doc.data().last.seconds || 0;
+                  this.userAttemptSeconds = doc.data().attempt.seconds || 0;
                 } else {
                   userDocRef.set({ count: 0 }); // Initialize user count if not exists
                   this.userCount = 0;
                   this.userLastIncrement = "unknown";
+                  this.userLastSeconds = 0;
+                  this.userAttemptSeconds = 0;
                 }
               });
               
