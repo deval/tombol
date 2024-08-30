@@ -98,14 +98,16 @@
               userDocRef.update({
                 count: firebase.firestore.FieldValue.increment(1)
               }).then(() => {
-                this.userCount += 1;
+                // this.userCount += 1;
+                initializeCounts();
               });
   
               // Increment global count
               globalDocRef.update({
                 count: firebase.firestore.FieldValue.increment(1)
               }).then(() => {
-                this.globalCount += 1;
+                // this.globalCount += 1;
+                initializeCounts();
               });
             }
           }
