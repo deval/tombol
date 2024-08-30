@@ -158,6 +158,7 @@
         closeMessageNotif() {
           this.messageNotif = "";  // Clear the success message
         },
+        },
         created() {
           auth.onAuthStateChanged(user => {
             if (user) {
