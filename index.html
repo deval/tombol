@@ -21,9 +21,11 @@
       
       <!-- Display user's individual count -->
       <p v-if="user">Your Count: {{ userCount }}</p>
+      <p v-if="user">Last Update: {{ userLastIncrement }}</p>
       
       <!-- Display global count -->
       <p>Total Global Count: {{ globalCount }}</p>
+      <p>last Global Update: {{ globalLastIncrement }}</p>
   
       <!-- Login Button -->
       <button v-if="!user" @click="signInWithGoogle" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Sign in with Google</button>
@@ -54,6 +56,8 @@
             user: null,
             userCount: 0,
             globalCount: 0,
+            userLastIncrement: 0,
+            globalLastIncrement: 0,
           };
         },
         methods: {
@@ -71,9 +75,11 @@
               userDocRef.get().then(doc => {
                 if (doc.exists) {
                   this.userCount = doc.data().count || 0;
+                  this.userLastIncrement = doc.data().last || 0;
                 } else {
                   userDocRef.set({ count: 0 }); // Initialize user count if not exists
                   this.userCount = 0;
+                  this.userLastIncrement = 0;
                 }
               });
               
@@ -82,9 +88,11 @@
               globalDocRef.get().then(doc => {
                 if (doc.exists) {
                   this.globalCount = doc.data().count || 0;
+                  this.globalLastIncrement = doc.data().last || 0;
                 } else {
                   globalDocRef.set({ count: 0 }); // Initialize global count if not exists
                   this.globalCount = 0;
+                  this.globalLastIncrement = 0;
                 }
               });
             }
@@ -96,7 +104,8 @@
   
               // Increment user's individual count
               userDocRef.update({
-                count: firebase.firestore.FieldValue.increment(1)
+                count: firebase.firestore.FieldValue.increment(1),
+                last: firebase.firestore.FieldValue.serverTimestamp()
               }).then(() => {
                 // this.userCount += 1;
                 this.initializeCounts();
@@ -104,7 +113,8 @@
   
               // Increment global count
               globalDocRef.update({
-                count: firebase.firestore.FieldValue.increment(1)
+                count: firebase.firestore.FieldValue.increment(1),
+                last: firebase.firestore.FieldValue.serverTimestamp()
               }).then(() => {
                 // this.globalCount += 1;
                 this.initializeCounts();
