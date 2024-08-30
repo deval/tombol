@@ -75,7 +75,7 @@
               userDocRef.get().then(doc => {
                 if (doc.exists) {
                   this.userCount = doc.data().count || 0;
-                  this.userLastIncrement = (doc.data().last.toDate().toLocaleDateString() +  doc.data().last.toDate().toLocaleTimeString()) || 0;
+                  this.userLastIncrement = (doc.data().last.toDate().toLocaleDateString() + " " + doc.data().last.toDate().toLocaleTimeString()) || 0;
                 } else {
                   userDocRef.set({ count: 0 }); // Initialize user count if not exists
                   this.userCount = 0;
@@ -88,7 +88,7 @@
               globalDocRef.get().then(doc => {
                 if (doc.exists) {
                   this.globalCount = doc.data().count || 0;
-                  this.globalLastIncrement = (doc.data().last.toDate().toLocaleDateString() +  doc.data().last.toDate().toLocaleTimeString()) || 0;
+                  this.globalLastIncrement = (doc.data().last.toDate().toLocaleDateString() + " " + doc.data().last.toDate().toLocaleTimeString()) || 0;
                 } else {
                   globalDocRef.set({ count: 0 }); // Initialize global count if not exists
                   this.globalCount = 0;
