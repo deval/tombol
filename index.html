@@ -99,7 +99,7 @@
                 count: firebase.firestore.FieldValue.increment(1)
               }).then(() => {
                 // this.userCount += 1;
-                initializeCounts();
+                this.initializeCounts();
               });
   
               // Increment global count
@@ -107,7 +107,7 @@
                 count: firebase.firestore.FieldValue.increment(1)
               }).then(() => {
                 // this.globalCount += 1;
-                initializeCounts();
+                this.initializeCounts();
               });
             }
           }
