@@ -70,10 +70,19 @@
     </div>
 
     <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDPFvIkKJPOHzqP2k_Wy1kNoJraU57ihnA",
+      authDomain: "tombol-fef53.firebaseapp.com",
+      projectId: "tombol-fef53",
+      storageBucket: "tombol-fef53.appspot.com",
+      messagingSenderId: "187582974174",
+      appId: "1:187582974174:web:19c7832dc3c78605c01a4f"
+    };
+
       // Initialize Firebase
       const firebaseApp = firebase.initializeApp(firebaseConfig);
       
-    const app = Vue.createApp({
+        const app = Vue.createApp({
           data() {
             return {
                     showModal: false,
