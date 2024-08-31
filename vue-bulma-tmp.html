@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue & Bulma App</title>
+    <!-- Bulma CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+    <!-- Vue CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- Font Awesome for icons (optional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .notification-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <!-- Header with Login Info -->
+        <div class="level">
+            <div class="level-left">
+                <h1 class="title">Vue & Bulma App</h1>
+            </div>
+            <div class="level-right">
+                <div class="buttons">
+                    <button class="button is-info">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu -->
+        <nav class="navbar">
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" @click="openPage('home')">Home</a>
+                    <a class="navbar-item" @click="openPage('about')">About</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="modal" :class="{ 'is-active': showModal }">
+            <div class="modal-background" @click="closeModal"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">{{ currentPage.title }}</p>
+                    <button class="delete" aria-label="close" @click="closeModal"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div v-html="currentPage.content"></div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button" @click="closeModal">Close</button>
+                </footer>
+            </div>
+        </div>
+
+        <!-- Notification Area -->
+        <div class="notification-bottom" v-if="notification">
+            <div :class="'notification ' + notification.type">
+                {{ notification.message }}
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // Initialize Firebase
+      const firebaseApp = firebase.initializeApp(firebaseConfig);
+      
+    const app = Vue.createApp({
+          data() {
+            return {
+                    showModal: false,
+                    currentPage: {
+                        title: '',
+                        content: ''
+                    },
+                    notification: null
+                };
+            },
+            methods: {
+                openPage(page) {
+                    if (page === 'home') {
+                        this.currentPage = {
+                            title: 'Home',
+                            content: '<p>Welcome to the home page!</p>'
+                        };
+                    } else if (page === 'about') {
+                        this.currentPage = {
+                            title: 'About',
+                            content: '<p>This is the about page.</p>'
+                        };
+                    }
+                    this.showModal = true;
+                },
+                closeModal() {
+                    this.showModal = false;
+                },
+                showNotification(type, message) {
+                    this.notification = { type, message };
+                    setTimeout(() => {
+                        this.notification = null;
+                    }, 5000); // Hide notification after 5 seconds
+                }
+            }
+        });
+
+      app.mount('#app');
+    </script>
+</body>
+</html>
