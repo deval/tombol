@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue, Bulma, and Firebase Example with CDN</title>
+
+  <!-- Bulma CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+
+  <!-- Firebase CDN -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@2.7.14/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app" class="section">
+    <div class="container">
+      <h1 class="title">Vue, Bulma, and Firebase Example with CDN</h1>
+      
+      <!-- Input Field -->
+      <div class="field">
+        <label class="label">Enter Data</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            placeholder="Type something..."
+            v-model="inputData"
+            :disabled="isLoading"
+          />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="field">
+        <div class="control">
+          <button
+            class="button is-primary"
+            :class="{ 'is-loading': isLoading }"
+            @click="submitData"
+            :disabled="isLoading"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+
+      <!-- Message Display -->
+      <div v-if="myMessage" :class="`notification ${messageClass}`">
+        {{ myMessage }}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Firebase configuration (Replace with your Firebase project settings)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Initialize Firestore
+    const db = firebase.firestore();
+
+    // Vue instance
+    new Vue({
+      el: '#app',
+      data: {
+        inputData: '',
+        isLoading: false,
+        myMessage: '', // Changed from 'message' to 'myMessage'
+        messageClass: ''
+      },
+      methods: {
+        async submitData() {
+          if (this.inputData.trim() === '') {
+            this.myMessage = 'Please enter some data!';
+            this.messageClass = 'is-danger';
+            return;
+          }
+
+          this.isLoading = true;
+          this.myMessage = ''; // Clear myMessage
+
+          try {
+            // Submit data to Firestore
+            await db.collection('data').add({
+              inputData: this.inputData,
+              createdAt: new Date()
+            });
+
+            this.myMessage = 'Data submitted successfully!';
+            this.messageClass = 'is-success';
+            this.inputData = '';
+          } catch (error) {
+            console.error('Error submitting data:', error);
+            this.myMessage = 'Failed to submit data!';
+            this.messageClass = 'is-danger';
+          } finally {
+            this.isLoading = false;
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
