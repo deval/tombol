@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>F7 Vue CDN Example</title>
+  <!-- Framework7 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framework7@6.3.14/framework7.bundle.min.css">
+  <!-- Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+  <!-- Framework7 Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/framework7@6.3.14/framework7.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/framework7-vue@6.3.14/framework7-vue.bundle.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <f7-view main>
+      <f7-page>
+        <f7-navbar title="Button Counter"></f7-navbar>
+        <div class="block">
+          <p>Button clicked {{ count }} times</p>
+          <f7-button @click="incrementCount">Click Me</f7-button>
+        </div>
+      </f7-page>
+    </f7-view>
+  </div>
+
+  <script>
+    // Initialize Framework7
+    Framework7.use(Framework7Vue);
+
+    // Vue instance
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          count: 0
+        };
+      },
+      methods: {
+        incrementCount() {
+          this.count += 1;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
